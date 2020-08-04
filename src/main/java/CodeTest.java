@@ -29,7 +29,7 @@ public class CodeTest {
     }
 
     public static String[] reverseArray(String[] input) {
-        validateInput(input);
+        validateInput((Object) input);
         List<String> list = asList(input);
         Collections.reverse(list);
 
@@ -37,7 +37,7 @@ public class CodeTest {
     }
 
     public static String[] uppercaseArray(String[] input) {
-        validateInput(input);
+        validateInput((Object) input);
         List<String> list = asList(input);
         list = list.parallelStream()
                 .map(String::toUpperCase)
@@ -53,6 +53,7 @@ public class CodeTest {
     }
 
     public static int findWordCount(String text, String wordToFind) {
+        validateInput(text, wordToFind);
         List<String> words =  Arrays.asList(text.split(" "));
         return Math.toIntExact(words.parallelStream()
                 .filter( s -> s.equals(wordToFind))
@@ -61,6 +62,7 @@ public class CodeTest {
     }
 
     public static Function<Integer,Integer> composeU(Function<Integer,Integer> f1, Function<Integer,Integer> f2){
+        validateInput(f1, f2);
         return f1.compose(f2);
     }
 
@@ -72,11 +74,12 @@ public class CodeTest {
             properties.entrySet().forEach(System.out::println);
         }catch (IOException ex){
             ex.printStackTrace();
-        };
+        }
     }
 
     public static void handleInvalidArgument() {
         // add code here
+        validateInput((Object)ARGUMENTS);
         List<String> validArguments=Arrays.asList("check", "value", "class", "test", "now", "pension");
         Arrays.stream(ARGUMENTS)
                 .filter(arg -> !validArguments.contains(arg))
@@ -88,7 +91,7 @@ public class CodeTest {
 
     public static void puzzle(String[] puzzleToTest) {
         // add code here
-        validateInput(puzzleToTest);
+        validateInput((Object) puzzleToTest);
         String currentValue = "";
         final String SNAP = ",'Snap'";
         for (String s : puzzleToTest) {
@@ -101,9 +104,11 @@ public class CodeTest {
         }
     }
 
-    private static void validateInput(Object input){
-        requireNonNull(input, "Input value must be non null.");
+    private static  void validateInput(Object... inputs){
+        Arrays.stream(inputs)
+                .forEach(input -> requireNonNull(input, "Input value must be non null."));
     }
+
     private static String objectToString(Object obj) {
         if (Objects.nonNull(obj) && obj.getClass().isArray()) {
             return asList((Object[]) obj).toString();

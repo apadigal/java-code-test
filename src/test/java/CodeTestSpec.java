@@ -35,6 +35,12 @@ public class CodeTestSpec {
 
         // assert
         assertArrayEquals(EXPECTED, actual);
+        assertArrayEquals(new String[]{}, CodeTest.reverseArray(new String[]{}));
+
+        // validate is NullPointerException throws with expected message.
+        NullPointerException nullPointerException = assertThrows(NullPointerException.class, () -> CodeTest.reverseArray(null));
+        assertEquals("Input value must be non null.", nullPointerException.getMessage());
+
     }
 
     @Test
@@ -47,6 +53,11 @@ public class CodeTestSpec {
 
         // assert
         assertArrayEquals(EXPECTED, actual);
+        assertArrayEquals(new String[]{}, CodeTest.uppercaseArray(new String[]{}));
+
+        // validate is NullPointerException throws with expected message.
+        NullPointerException nullPointerException = assertThrows(NullPointerException.class, () -> CodeTest.uppercaseArray(null));
+        assertEquals("Input value must be non null.", nullPointerException.getMessage());
 
     }
 
@@ -61,6 +72,15 @@ public class CodeTestSpec {
         // assert
         assertEquals(EXPECTED, actual);
 
+        // validate is NullPointerException throws with expected message.
+        NullPointerException nullPointerException = assertThrows(NullPointerException.class, () -> CodeTest.findWordCount(null, null));
+        assertEquals("Input value must be non null.", nullPointerException.getMessage());
+
+        nullPointerException = assertThrows(NullPointerException.class, () -> CodeTest.findWordCount(null, "null"));
+        assertEquals("Input value must be non null.", nullPointerException.getMessage());
+
+        nullPointerException = assertThrows(NullPointerException.class, () -> CodeTest.findWordCount("null", null));
+        assertEquals("Input value must be non null.", nullPointerException.getMessage());
     }
 
     @Test
@@ -77,6 +97,9 @@ public class CodeTestSpec {
         // assert
         assertThat(EXPECTED, is(actual));
 
+        // validate is NullPointerException throws with expected message.
+        NullPointerException nullPointerException = assertThrows(NullPointerException.class, () -> CodeTest.getCountOfWords(null));
+        assertEquals("Input value must be non null.", nullPointerException.getMessage());
     }
 
     @Test
@@ -91,6 +114,10 @@ public class CodeTestSpec {
 
         // assert
         assertThat(composedFunctionTest.apply(6), equalTo(EXPECTED));
+
+        // validate is NullPointerException throws with expected message.
+        NullPointerException nullPointerException = assertThrows(NullPointerException.class, () -> CodeTest.composeU(null, null));
+        assertEquals("Input value must be non null.", nullPointerException.getMessage());
     }
 
     @Test
@@ -122,6 +149,9 @@ public class CodeTestSpec {
         // validate is IllegalArgumentException throws with expected message.
         IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> CodeTest.main(new String[]{"value1", "test"}));
         assertEquals("Only following command line arguments allowed : [check, value, class, test, now, pension]", illegalArgumentException.getMessage());
+
+        NullPointerException nullPointerException = assertThrows(NullPointerException.class, () -> CodeTest.main(null));
+        assertEquals("Input value must be non null.", nullPointerException.getMessage());
 
     }
 
